@@ -1,0 +1,22 @@
+.auth-container{
+    background-image: url("./assets/images/bg-img.png");
+    background-size: cover;
+    background-position: center center;
+}
+
+.bg-layer{
+    background: linear-gradient(45deg,rgba(47,140,96,0.7),rgba(0,0,0,0.8));
+}
+
+.auth-container .btnn{
+    background-color: #4AA35A;
+    color: #fff;
+    border: none;
+}
+.auth-container .forget-pass{
+  color: #4AA35A;
+}
+
+.input-group-text{
+    text-align: start !important;
+}
