@@ -20,3 +20,10 @@
 .input-group-text{
     text-align: start !important;
 }
+
+.icons{
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    
+}

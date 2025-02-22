@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from "../../../assets/images/logo.png"
@@ -9,6 +9,12 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function Login() {
 
   let {register, formState:{errors}, handleSubmit} =useForm();
+  const [passwordEye, setPasswordEye] = useState(false)
+    const handelPasswordClick=()=>{
+      console.log("loginnpass");
+      
+      setPasswordEye(!passwordEye)
+    }
   let navigate = useNavigate()
   const onSubmit= async(data)=>{
     try {
@@ -74,6 +80,7 @@ export default function Login() {
                     
 
                    })} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
                 
@@ -82,7 +89,10 @@ export default function Login() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-key' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,{required:"Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type="password" class="form-control input-group-text" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <input {...register("password" ,{required:"Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type={(passwordEye===false)?"password":"text"} class="form-control input-group-text" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <div className="icons position-absolute">
+                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                  </div>
                  </div>
                  {errors.password&&<span className='text-danger'>{errors.password.message}</span>}
                  <div className="links my-2 d-flex justify-content-between">

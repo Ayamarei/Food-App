@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
 
 
-export default function Login() {
+export default function ForgetPass() {
 
   let {register, formState:{errors}, handleSubmit} =useForm();
   let navigate = useNavigate()
@@ -14,6 +14,7 @@ export default function Login() {
     try {
     let respons= await  axios.post("https://upskilling-egypt.com:3006/api/v1/Users/Reset/Request",data)
     console.log(respons);
+    console.log(data);
      toast.success(respons.data.message, {
           position: "top-right",
           autoClose: 5000,

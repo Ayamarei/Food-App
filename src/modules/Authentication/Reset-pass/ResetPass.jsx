@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from "../../../assets/images/logo.png"
@@ -6,14 +6,31 @@ import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
 // import 'react-toastify/dist/reactToastify.css'
 
-export default function Login() {
+export default function ResetPass() {
 
-  let {register, formState:{errors}, handleSubmit} =useForm();
+  let {register, formState:{errors}, handleSubmit,watch} =useForm({
+    mode:"onChange"
+  });
+  const password=watch("password")
+  const [passwordEye, setPasswordEye] = useState(false)
+  const handelPasswordClick=()=>{
+    console.log("ooo");
+    
+    setPasswordEye(!passwordEye)
+  }
+  const [passwordConfirmEye, setPasswordConfitmEye] = useState(false)
+  const handelPasswordConfirm=()=>{
+    console.log("confirm");
+    
+    setPasswordConfitmEye(!passwordConfirmEye)
+  }
+  
   let navigate = useNavigate()
   const onSubmit= async(data)=>{
+    console.log(data.confirmPassword);
     try {
     let respons= await  axios.post("https://upskilling-egypt.com:3006/api/v1/Users/Reset",data)
-    console.log(data);
+   
      toast.success(respons.data.message, {
               position: "top-right",
               autoClose: 5000,
@@ -84,21 +101,30 @@ export default function Login() {
                  </div>
                  {errors.seed&&<span className='text-danger'>{errors.seed.message}</span>}
 
-                 <div className="input-group mb-2 mt-3">
+                 <div className="input-group mb-2 mt-3 position-relative">
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,{required:"Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type="password" class="form-control input-group-text" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1"/>
-                 </div>
+                   <input {...register("password" ,{required:"Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type={(passwordEye===false)?"password":'text'} class="form-control input-group-text" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <div className="icons position-absolute">
+                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                  </div>
+                   </div>
                  {errors.password&&<span className='text-danger'>{errors.password.message}</span>}
 
                  <div className="input-group mb-2 mt-3">
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("confirmPassword" ,{required:"Confirm Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type="password" class="form-control input-group-text" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <input {...register("confirmPassword" ,{required:"Confirm Password is required",validate:(value)=>
+                    value===password||"Password do not match"})} type={(passwordConfirmEye===false)?"password":'text'} class="form-control input-group-text" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                  <div className="icons position-absolute">
+                    {(passwordConfirmEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordConfirm}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordConfirm}></i>}
+                  </div>
+                   
                  </div>
-                 {errors.password&&<span className='text-danger'>{errors.password.message}</span>}
+                 
+                 {errors.confirmPassword&&<span className='text-danger'>{errors.confirmPassword.message}</span> }
                 
                  <button className='w-100 btnn rounded-2 py-2 my-3'>Login</button>
                  </form>
@@ -107,6 +133,5 @@ export default function Login() {
         </div>
        </div>
     </>
-  
   
 }
