@@ -27,3 +27,44 @@
     transform: translateY(-50%);
     
 }
+
+.sidebar-container .ps-sidebar-root .ps-sidebar-container  {
+    background-color: #1F263E  ;
+    color: #fff;
+    height: 100vh;
+    border-top-right-radius: 58px;
+}
+
+.sidebar-container .ps-menu-button:hover{
+    background-color: rgba(0, 146, 71, 0.1) !important;
+    border-left: 3px solid rgb(0, 146, 71);
+    transition: all 0.3s ;
+    -webkit-transition: all 0.3s ;
+    -moz-transition: all 0.3s ;
+    -ms-transition: all 0.3s ;
+    -o-transition: all 0.3s ;
+}
+.sidebar-container .logo a:hover{
+    background-color:transparent !important;
+    border-left:none;
+}
+
+
+ .layer {
+    background-color: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transition: all 0.5s;
+    transform: translate(-50% , -50%);
+    -webkit-transform: translate(-50% , -50%);
+    -moz-transform: translate(-50% , -50%);
+    -ms-transform: translate(-50% , -50%);
+    -o-transform: translate(-50% , -50%);
+}
+:hover .layer {
+    opacity: 1;
+    
+}
+
+.header .row{
+    background-color:rgba(0, 146, 71, 1) !important ;
+}

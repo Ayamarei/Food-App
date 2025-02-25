@@ -1,53 +1,36 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import logo from "../../../assets/images/logo.png"
-import axios from 'axios';
+
+
 import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
+import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '../../../Services/Validations/Validations';
 
-export default function Login() {
+export default function Login({saveLoginData}) {
 
-  let {register, formState:{errors}, handleSubmit} =useForm();
+  let {register, formState:{errors , isSubmitting}, handleSubmit} =useForm({ mode:"onChange"});
   const [passwordEye, setPasswordEye] = useState(false)
     const handelPasswordClick=()=>{
-      console.log("loginnpass");
-      
       setPasswordEye(!passwordEye)
     }
+    
   let navigate = useNavigate()
   const onSubmit= async(data)=>{
     try {
-    let respons= await  axios.post("https://upskilling-egypt.com:3006/api/v1/Users/Login",data)
-    console.log(data);
-    toast.success("Logged in ", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      transition: Bounce,
-      });
+    let respons= await  publicAxiosInstance.post(USERS_URLS.Login,data)
+    localStorage.setItem("token",respons.data.token)
+    // console.log(respons.data.token);
+    saveLoginData()
+    toast.success("Logged in Successfuly ");
 
     navigate("/dashboard")
     
     
     
     } catch (error) {
-      toast.error(error.response.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-        });
+      toast.error(error.response.data.message);
       console.log(error.response.data.message);
       
     }
@@ -55,14 +38,9 @@ export default function Login() {
     
   }
   return <>
-       <div className='auth-container '>
+    
        
-        <div className="container-fluid bg-layer">
-          <div className='row vh-100 justify-content-center align-items-center '>
-            <div className="col-md-5 bg-white rounded-3 px-5 py-3">
-              <div className='logo-container text-center'>
-                <img className="w-50"  src={logo} alt="" />
-                 </div>
+        
                  <div className="title">
                   <h3 className='h5'>Log In</h3>
                   <p className='text-muted'>Welcome Back ! Please enter your details</p>
@@ -72,14 +50,9 @@ export default function Login() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-envelope' aria-hidden="true"></i>
                    </span>
-                   <input {...register("email",{
-                    required:"Email is require",
-                    pattern:{value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                      message:"Email is invalid"
-                    }
-                    
+                   <input {...register("email",EMAIL_VALIDATION
 
-                   })} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+                 )} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
 
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
@@ -89,22 +62,22 @@ export default function Login() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-key' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,{required:"Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type={(passwordEye===false)?"password":"text"} class="form-control input-group-text" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1"/>
-                   <div className="icons position-absolute">
-                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                   <input {...register("password" ,PASSWORD_VALIDATION)} type={(passwordEye===false)?"password":"text"} class="form-control input-group-text" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <span className="input-group-text" id="basic-addon1">
+                   {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                   </span>
+                    
                   </div>
-                 </div>
+                 
                  {errors.password&&<span className='text-danger'>{errors.password.message}</span>}
                  <div className="links my-2 d-flex justify-content-between">
                   <Link to="/register" className='text-decoration-none text-black'>Register Now?</Link>
                   <Link to="/forget-password"  className='text-decoration-none forget-pass'>Forget Password</Link>
                  </div>
-                 <button className='w-100 btnn rounded-2 py-2 my-3'>Login</button>
+                 <button disabled={isSubmitting} className='w-100 btnn rounded-2 py-2 my-3'>{isSubmitting?"Loading..." :"Login"}</button>
                  </form>
-            </div>
-          </div>
-        </div>
-       </div>
+            
+         
     </>
   
   

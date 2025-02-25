@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,7 +8,7 @@ import Login from './modules/Authentication/Login/Login.jsx'
 import ForgetPass from './modules/Authentication/Forget-pass/ForgetPass'
 import Register from './modules/Authentication/Register/Register'
 import ResetPass from './modules/Authentication/Reset-pass/ResetPass'
-import RecipesList from './modules/Recipes/RecipesList/RecipesList'
+import RecipesList from './modules/Recipes/RecipesList/RecipesList.jsx'
 import RecipeData from './modules/Recipes/RecipeData/RecipeData'
 import Dashboard from './modules/Dashboard/Dashboard'
 import MasterLayout from './modules/Shared/MasterLayout/MasterLayout'
@@ -18,28 +18,47 @@ import CategoryData from './modules/Categories/CategoryData/CategoryData'
 import UsersList from './modules/Users/UsersList/UsersList'
 import VerifyAccount from './modules/Authentication/Verify-account/VerifyAccount.jsx'
 import { Bounce, ToastContainer } from 'react-toastify'
+import { jwtDecode } from 'jwt-decode'
+import ProtectedRoute from './modules/Shared/ProtectedRoute/ProtectedRoute.jsx'
+import ChangePass from './modules/Authentication/Change-pass/ChangePass.jsx'
 
 
 function App() {
  
-  
+  const [loginData, setLoginData] = useState(null)
+  let saveLoginData=()=>{
+    let encodedToken = localStorage.getItem("token");
+    let decodedToken = jwtDecode(encodedToken);
+    setLoginData(decodedToken)
+    // console.log(loginData );
+    
+  }
+
+  useEffect(()=>{
+    if(localStorage.getItem("token"))
+      saveLoginData()
+  },[]
+
+  )
+
   const routes=createBrowserRouter([{
     path:"", 
     element:<AuthLayout/>,
     errorElement:<NotFound/>,
     children:[
-      {index:true, element:<Login/>},
-      {path:"login", element:<Login/>},
+      {index:true, element:<Login saveLoginData={saveLoginData}/>},
+      {path:"login", element:<Login saveLoginData={saveLoginData}/>},
       {path:"forget-password", element:<ForgetPass/>},
       {path:"register", element:<Register/>},
       {path:"reset-password", element:<ResetPass/>},
       {path:"verify-account", element:<VerifyAccount/>},
+      {path:"change-password", element:<ChangePass/>},
     ]
   },
 
   {
     path:"/dashboard",
-    element:<MasterLayout/>,
+    element: <ProtectedRoute> <MasterLayout loginData={loginData}/> </ProtectedRoute>,
     errorElement:<NotFound/>,
     children:[
       {index:true, element:<Dashboard/>},
@@ -58,7 +77,7 @@ function App() {
     <RouterProvider router={routes}></RouterProvider>
     <ToastContainer
   position="top-right"
-  autoClose={5000}
+  autoClose={3000}
   hideProgressBar={false}
   newestOnTop={false}
   closeOnClick={false}

@@ -1,20 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
-import logo from "../../../assets/images/logo.png"
-import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Bounce, toast } from 'react-toastify';
+import { publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
+import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '../../../Services/Validations/Validations';
 // import 'react-toastify/dist/reactToastify.css'
 
 export default function ResetPass() {
 
-  let {register, formState:{errors}, handleSubmit,watch} =useForm({
-    mode:"onChange"
-  });
+  let {state}=useLocation()
+
+  let {register, formState:{errors,isSubmitting}, handleSubmit,watch,trigger} =useForm({defaultValues:{state:state.email}},
+    
+   { mode:"onChange"}
+  );
   const password=watch("password")
+  const confirmPassword=watch("confirmPassword")
+  useEffect(()=>{
+        if(confirmPassword){
+          trigger("confirmPassword")
+        }
+  },[password,confirmPassword,trigger])
   const [passwordEye, setPasswordEye] = useState(false)
   const handelPasswordClick=()=>{
-    console.log("ooo");
     
     setPasswordEye(!passwordEye)
   }
@@ -27,36 +35,15 @@ export default function ResetPass() {
   
   let navigate = useNavigate()
   const onSubmit= async(data)=>{
-    console.log(data.confirmPassword);
     try {
-    let respons= await  axios.post("https://upskilling-egypt.com:3006/api/v1/Users/Reset",data)
+    let respons= await  publicAxiosInstance.post(USERS_URLS.Reset_Pass,data)
    
-     toast.success(respons.data.message, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              transition: Bounce,
-              });
+     toast.success(respons.data.message);
     navigate("/login")
     
     
     } catch (error) {
-       toast.error(error.response.data.message, {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-              transition: Bounce,
-              });
+       toast.error(error.response.data.message);
       console.log(error.response.data.message);
       
     }
@@ -64,14 +51,8 @@ export default function ResetPass() {
     
   }
   return <>
-       <div className='auth-container '>
-      
-        <div className="container-fluid bg-layer">
-          <div className='row vh-100 justify-content-center align-items-center '>
-            <div className="col-md-5 bg-white rounded-3 px-5 py-3">
-              <div className='logo-container text-center'>
-                <img className="w-50"  src={logo} alt="" />
-                 </div>
+       
+                 
                  <div className="title">
                   <h3 className='h5'> Reset  Password</h3>
                   <p className='text-muted'>Please Enter Your Otp  or Check Your Inbox</p>
@@ -81,14 +62,7 @@ export default function ResetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-envelope' aria-hidden="true"></i>
                    </span>
-                   <input {...register("email",{
-                    required:"Email is require",
-                    pattern:{value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                      message:"Email is invalid"
-                    }
-                    
-
-                   })} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+                   <input {...register("email",EMAIL_VALIDATION)} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
                 
@@ -105,33 +79,35 @@ export default function ResetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,{required:"Password is required",minLength:{value:5,message:"password must be at least 5 characters "}})} type={(passwordEye===false)?"password":'text'} class="form-control input-group-text" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1"/>
-                   <div className="icons position-absolute">
-                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                   <input {...register("password" ,PASSWORD_VALIDATION)} type={(passwordEye===false)?"password":'text'} class="form-control input-group-text" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <span className="input-group-text" id="basic-addon1">
+                   {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                   </span>
+                    
                   </div>
-                   </div>
+                  
                  {errors.password&&<span className='text-danger'>{errors.password.message}</span>}
 
                  <div className="input-group mb-2 mt-3">
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("confirmPassword" ,{required:"Confirm Password is required",validate:(value)=>
-                    value===password||"Password do not match"})} type={(passwordConfirmEye===false)?"password":'text'} class="form-control input-group-text" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1"/>
-                  <div className="icons position-absolute">
-                    {(passwordConfirmEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordConfirm}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordConfirm}></i>}
+                   <input {...register("confirmPassword" ,{required:"Confirm Password is required",
+                   validate:(confirmPassword)=>
+                    confirmPassword===watch("password")||"Password do not match"})} type={(passwordConfirmEye===false)?"password":'text'} class="form-control input-group-text" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <span className="input-group-text" id="basic-addon1">
+                   {(passwordConfirmEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordConfirm}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordConfirm}></i>}
+                   </span>
+                    
                   </div>
                    
-                 </div>
+                
                  
                  {errors.confirmPassword&&<span className='text-danger'>{errors.confirmPassword.message}</span> }
                 
-                 <button className='w-100 btnn rounded-2 py-2 my-3'>Login</button>
+                 <button disabled={isSubmitting}  className='w-100 btnn rounded-2 py-2 my-3'> {isSubmitting?"Loading...":"Reset Password"}</button>
                  </form>
-            </div>
-          </div>
-        </div>
-       </div>
+         
     </>
   
 }
