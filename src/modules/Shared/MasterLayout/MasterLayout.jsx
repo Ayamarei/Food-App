@@ -8,17 +8,20 @@ export default function MasterLayout({loginData}) {
   return (
    <>
 
-   <div className="d-flex">
-    <div>
-      <SideBar/>
+   <div className="d-flex vh-100">
+    <div >
+    <SideBar/>
     </div>
-    <div className="w-100">
+     
+    <div className="w-100  d-flex flex-column">
     <Navbar loginData={loginData}/>
-    <Header/>
-    <Outlet/>
+    {/* <Header/> */}
+    <div className='overflow-y-auto'> 
+      <Outlet/>
+    </div>
     </div>
    </div>
-   
+
    </>
   )
 }

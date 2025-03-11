@@ -8,12 +8,12 @@
     background: linear-gradient(45deg,rgba(47,140,96,0.7),rgba(0,0,0,0.8));
 }
 
-.auth-container .btnn{
+ .btnn{
     background-color: #4AA35A;
     color: #fff;
     border: none;
 }
-.auth-container .forget-pass{
+.auth-container .forget-pass {
   color: #4AA35A;
 }
 
@@ -65,6 +65,58 @@
     
 }
 
-.header .row{
+.header .row , .btn-color{
     background-color:rgba(0, 146, 71, 1) !important ;
+    
+}
+
+.icon-color{
+    color: #009247;
+}
+.dropdown li,i{
+    cursor: pointer;
+}
+
+.not_found{
+    background-image: url(./assets/images/Vector.png);
+    background-repeat: no-repeat;
+    background-position-x: right ;
+    background-position-y: top;
+    height: 100vh;
+}
+
+.not_found img{
+    width: 40%;
+}
+
+.btn_delete{
+    color: #CC0000;
+    background-color: #fff;
+    border:1px solid #CC0000;
+
+}
+.btn_delete:hover{
+    color:#fff ;
+    background-color: #CC0000;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+}
+
+.table thead tr th{
+    background-color: rgba(226, 229, 235, 1) !important;
+    padding: 20px;
+}
+
+@media(max-width:992px){
+  .content  .title {
+        display: block !important;
+        text-align: center;
+    }
+    .content  .title button{width: 100%;}
+    /* .header{padding: 0;} */
+    .header .img img{width: 25% !important;}
+    
 }

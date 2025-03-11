@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-
-
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '../../../Services/Validations/Validations';
@@ -12,6 +10,7 @@ export default function Login({saveLoginData}) {
 
   let {register, formState:{errors , isSubmitting}, handleSubmit} =useForm({ mode:"onChange"});
   const [passwordEye, setPasswordEye] = useState(false)
+
     const handelPasswordClick=()=>{
       setPasswordEye(!passwordEye)
     }
@@ -21,12 +20,11 @@ export default function Login({saveLoginData}) {
     try {
     let respons= await  publicAxiosInstance.post(USERS_URLS.Login,data)
     localStorage.setItem("token",respons.data.token)
-    // console.log(respons.data.token);
+    // console.log(respons);
     saveLoginData()
-    toast.success("Logged in Successfuly ");
+    toast.success( respons.data.message||"Logged in Successfuly ");
 
     navigate("/dashboard")
-    
     
     
     } catch (error) {
@@ -34,13 +32,9 @@ export default function Login({saveLoginData}) {
       console.log(error.response.data.message);
       
     }
-    
-    
   }
   return <>
     
-       
-        
                  <div className="title">
                   <h3 className='h5'>Log In</h3>
                   <p className='text-muted'>Welcome Back ! Please enter your details</p>

@@ -1,39 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Bounce, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import { publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '../../../Services/Validations/Validations';
-// import 'react-toastify/dist/reactToastify.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function ResetPass() {
 
   let {state}=useLocation()
 
   let {register, formState:{errors,isSubmitting}, handleSubmit,watch,trigger} =useForm({defaultValues:{state:state.email}},
-    
    { mode:"onChange"}
   );
   const password=watch("password")
   const confirmPassword=watch("confirmPassword")
+
   useEffect(()=>{
         if(confirmPassword){
           trigger("confirmPassword")
         }
   },[password,confirmPassword,trigger])
+
   const [passwordEye, setPasswordEye] = useState(false)
+  
   const handelPasswordClick=()=>{
-    
     setPasswordEye(!passwordEye)
   }
   const [passwordConfirmEye, setPasswordConfitmEye] = useState(false)
   const handelPasswordConfirm=()=>{
-    console.log("confirm");
-    
     setPasswordConfitmEye(!passwordConfirmEye)
   }
   
   let navigate = useNavigate()
+
   const onSubmit= async(data)=>{
     try {
     let respons= await  publicAxiosInstance.post(USERS_URLS.Reset_Pass,data)
@@ -41,18 +41,15 @@ export default function ResetPass() {
      toast.success(respons.data.message);
     navigate("/login")
     
-    
     } catch (error) {
        toast.error(error.response.data.message);
-      console.log(error.response.data.message);
-      
+      // console.log(error.response.data.message);
     }
     
-    
   }
+
   return <>
        
-                 
                  <div className="title">
                   <h3 className='h5'> Reset  Password</h3>
                   <p className='text-muted'>Please Enter Your Otp  or Check Your Inbox</p>
@@ -66,7 +63,6 @@ export default function ResetPass() {
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
                 
-
                  <div className="input-group mb-2 mt-3">
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
@@ -83,7 +79,6 @@ export default function ResetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
                    </span>
-                    
                   </div>
                   
                  {errors.password&&<span className='text-danger'>{errors.password.message}</span>}
@@ -101,8 +96,6 @@ export default function ResetPass() {
                     
                   </div>
                    
-                
-                 
                  {errors.confirmPassword&&<span className='text-danger'>{errors.confirmPassword.message}</span> }
                 
                  <button disabled={isSubmitting}  className='w-100 btnn rounded-2 py-2 my-3'> {isSubmitting?"Loading...":"Reset Password"}</button>

@@ -26,6 +26,7 @@ import ChangePass from './modules/Authentication/Change-pass/ChangePass.jsx'
 function App() {
  
   const [loginData, setLoginData] = useState(null)
+
   let saveLoginData=()=>{
     let encodedToken = localStorage.getItem("token");
     let decodedToken = jwtDecode(encodedToken);
@@ -52,7 +53,7 @@ function App() {
       {path:"register", element:<Register/>},
       {path:"reset-password", element:<ResetPass/>},
       {path:"verify-account", element:<VerifyAccount/>},
-      {path:"change-password", element:<ChangePass/>},
+      // {path:"change-password", element:<ChangePass/>},
     ]
   },
 
