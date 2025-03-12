@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../Shared/Header/Header'
 import NoData from '../../Shared/Nodata/NoData'
-import { baseURL, privateAxiosInstance, Users_Urls } from '../../../Services/Urls/Urls'
+import { baseURL, img_URL, privateAxiosInstance, Users_Urls } from '../../../Services/Urls/Urls'
 import imag from "../../../assets/images/recipes_img (1).png"
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
