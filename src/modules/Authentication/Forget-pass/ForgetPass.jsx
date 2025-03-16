@@ -2,8 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from "../../../assets/images/logo.png"
-import axios from 'axios';
-import { Bounce, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import {  publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
 import { EMAIL_VALIDATION } from '../../../Services/Validations/Validations';
 

@@ -2,13 +2,26 @@ import React from 'react'
 import Header from '../Shared/Header/Header'
 import imag from "../../assets/images/home_img (2).png"
 import ChangePass from '../Authentication/Change-pass/ChangePass'
+import { Link } from 'react-router-dom'
 
 
 export default function Dashboard() {
   return (
     <>
-    <Header title={"Welcome Ayaa !"} description={"This is a welcoming screen for the entry of the application , you can now see the options"} img={imag}/>
-    <h1>Dashboard</h1>
+   <div className="content mx-3">
+   <Header title={"Welcome Ayaa !"} description={"This is a welcoming screen for the entry of the application , you can now see the options"} img={imag}/>
+    <div className="header_recipe m-3 p-3 rounded-3">
+         <div className="row d-flex justify-content-between">
+           <div className='col-md-10'>
+           <h3>Fill the <span className='fs-3 text-success'>Recipes !</span></h3>
+           <p>you can now fill the meals easily using the table and form , click here and sill it with the table !</p>
+           </div>
+           <div className='col-md-2'>
+           <Link to="/dashboard/recipes" className='btn btn-color text-white mt-3 p-3'>Fill Recipes <i class="fa-solid fa-arrow-right"></i></Link>
+           </div>
+            </div>
+       </div>
+   </div>
  
 
     </>

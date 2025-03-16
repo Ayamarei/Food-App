@@ -5,7 +5,8 @@ import { baseURL, img_URL, privateAxiosInstance, Users_Urls } from '../../../Ser
 import imag from "../../../assets/images/recipes_img (1).png"
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
-import { Circles, ColorRing } from 'react-loader-spinner'
+import {  ColorRing } from 'react-loader-spinner'
+import Pagination from '../../Shared/Pagination/Pagination'
 
 
 
@@ -14,11 +15,15 @@ export default function UsersList() {
    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [deleteById, setDeleteById] = useState(null)
      const [isLoading, setIsLoading] = useState(true)
+     const [arrayOfPages, setArrayOfPages] = useState([])
  
-    let getAllUsers=async()=>{
+    let getAllUsers=async(pageSize,pageNumber)=>{
      try {
-       let response =await privateAxiosInstance.get(`${Users_Urls.Get_Users}/?pageSize=10&pageNumber=1` )
+       let response =await privateAxiosInstance.get(Users_Urls.Get_Users,{
+        params:{pageSize :pageSize,pageNumber :pageNumber } 
+       } )
        setUsersList(response?.data.data)
+       setArrayOfPages(Array(response?.data?.totalNumberOfPages).fill().map((_,index)=>index+1))
       //  console.log(response);
        
        
@@ -41,18 +46,20 @@ export default function UsersList() {
  
      } catch (error) {
        console.log(error)
+       toast.error(error.message||"Failed")
+
      }
     }
  
  
     useEffect(()=>{
-      getAllUsers()}
+      getAllUsers(4,1)}
      ,[]
     )
  
    return (
      <>
-      <div className="content">
+      <div className="content mx-3">
      <Header title={"Users List "} description={"You can now add your items that any user can order it from the Application and you can edit"} img={imag}/>
     <div className=' title d-flex justify-content-between p-4 mx-3'>
     <div className="description ">
@@ -109,6 +116,7 @@ export default function UsersList() {
         }
         
         </div>
+        {/* <Pagination arrayOfPages={arrayOfPages} PaginationFun ={getAllUsers}/> */}
      </>
    )
 }

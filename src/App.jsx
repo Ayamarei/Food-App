@@ -9,7 +9,7 @@ import ForgetPass from './modules/Authentication/Forget-pass/ForgetPass'
 import Register from './modules/Authentication/Register/Register'
 import ResetPass from './modules/Authentication/Reset-pass/ResetPass'
 import RecipesList from './modules/Recipes/RecipesList/RecipesList.jsx'
-import RecipeData from './modules/Recipes/RecipeData/RecipeData'
+// import RecipeData from './modules/Recipes/RecipeData/RecipeData'
 import Dashboard from './modules/Dashboard/Dashboard'
 import MasterLayout from './modules/Shared/MasterLayout/MasterLayout'
 import NotFound from './modules/Shared/NotFound/NotFound'
@@ -20,7 +20,8 @@ import VerifyAccount from './modules/Authentication/Verify-account/VerifyAccount
 import { Bounce, ToastContainer } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import ProtectedRoute from './modules/Shared/ProtectedRoute/ProtectedRoute.jsx'
-import ChangePass from './modules/Authentication/Change-pass/ChangePass.jsx'
+import RecipeData from './modules/Recipes/RecipeData/RecipeData.jsx'
+
 
 
 function App() {
@@ -64,7 +65,8 @@ function App() {
     children:[
       {index:true, element:<Dashboard/>},
       {path:"recipes", element:<RecipesList/>},
-      {path:"recipe-data", element:<RecipeData/>},
+      {path:"recipes/new-recipe", element:<RecipeData/>},
+      {path:"recipes/:recipeId", element:<RecipeData/>},
       {path:"categories", element:<CategoriesList/>},
       {path:"category-data", element:<CategoryData/>},
       {path:"users", element:<UsersList/>},

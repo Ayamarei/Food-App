@@ -22,10 +22,15 @@ export const Categories_Urls={
 }
 export const Recipes_Urls={
     Get_Recipes :`Recipe`,
+    Add_Recipes :`Recipe/`,
+    Update_Recipes :`Recipe/`,
   
 }
 export const Users_Urls={
     Get_Users :`Users`,
     Delete_Users :`Users`,
   
+}
+export const Tags_Urls={
+    Get_Tags :`tag/`
 }
