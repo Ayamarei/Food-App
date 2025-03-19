@@ -4,6 +4,7 @@ export default function Header({title,description,img}) {
   return (
     <>
     <div className="container-fluid header">
+      
       <div className="row rounded-4 ">
         <div className="col-lg-8  ">
           <div className="content text-white m-4">

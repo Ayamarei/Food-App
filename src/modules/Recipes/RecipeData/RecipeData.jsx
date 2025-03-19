@@ -115,7 +115,8 @@ export default function RecipeData() {
              ))}
             </select>
             </div>         
-                  <input {...register("price" , { required: "The price  field is required."}) }  type='number' className="form-control input-group-text mt-5 mb-3 " placeholder=" Recipe price "  aria-describedby="basic-addon1"/>
+                  <input {...register("price" , { required: "The price  field is required."}) }
+                    type='number' className="form-control input-group-text mt-5 mb-3 " placeholder=" Recipe price "  aria-describedby="basic-addon1"/>
                 {errors.price  && <span className="text-danger">{errors.price .message}</span>}
               <div>
              <select class="form-select input-group-text"  aria-label="Default select example"  {...register("categoriesIds" , { required: "The Categories  field is required."}) } >

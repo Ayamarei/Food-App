@@ -8,7 +8,7 @@ import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmati
 import { toast } from 'react-toastify'
 import { ColorRing } from 'react-loader-spinner'
 import Pagination from '../../Shared/Pagination/Pagination'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function RecipesList() {
 
@@ -22,6 +22,7 @@ export default function RecipesList() {
   const [nameValue, setNameValue] = useState("")
   const [tagValue, setTagValue] = useState("")
   const [categoryValue, setCategoryValue] = useState("")
+  const navigate=useNavigate()
 
 
    let getAllRecipes=async(pageSize ,pageNumber ,name,tag ,cat)=>{
@@ -139,19 +140,19 @@ export default function RecipesList() {
             </div>
             {/* SELECT TAGS */}
             <div className="col-md-3">
-            <select class="form-select" aria-label="Default select example" onChange={getTagValue}>
+            <select className="form-select" aria-label="Default select example" onChange={getTagValue}>
              <option selected>Tags</option>
              {tags?.map(({id,name})=>(
-              <option key={id} value={id} >{name}</option>
+              <option key={id} defaultValue={id} >{name}</option>
              ))}
             </select>
             </div>
             {/* SELECT CATEGORY */}
             <div className="col-md-3">
-            <select class="form-select" onChange={getCategoryValue} aria-label="Default select example">
+            <select className="form-select" onChange={getCategoryValue} aria-label="Default select example">
               <option selected>Category</option>
                {categories?.map(({id,name})=>(
-              <option key={id} value={id}>{name}</option>
+              <option key={id} defaultValue={id}>{name}</option>
              ))}
 </select>
             </div>
@@ -194,13 +195,13 @@ export default function RecipesList() {
          <td>{recipe.price}EG</td>
          <td>{recipe.description }</td>
          <td> {recipe.tag.name}</td>
-         <td>{recipe.category[0].name }</td>
+         <td>{recipe.category[0].name}</td>
          
          <td className="dropdown">
        <i className="fa-solid fa-ellipsis " data-bs-toggle="dropdown"></i>
        <ul className="dropdown-menu">
         <li > <i className="fa-solid fa-hurricane  m-3 icon-color"></i>View</li>
-        <li><Link to={`/dashboard/recipes/${recipe.id}`}> <i className="fa fa-edit m-3 icon-color"></i>Edit</Link></li> 
+        <li  onClick={()=>(navigate(`/dashboard/recipes/${recipe.id}`))} > <i className="fa fa-edit m-3 icon-color"></i>Edit</li> 
         <li onClick={()=>{setShowDeleteConfirm(true);setDeleteById(recipe.id)}}> <i className="fa fa-trash m-3 icon-color " ></i> Delete</li>
        </ul>
          </td>

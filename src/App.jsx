@@ -24,20 +24,22 @@ import RecipeData from './modules/Recipes/RecipeData/RecipeData.jsx'
 
 
 
+
 function App() {
  
-  const [loginData, setLoginData] = useState(null)
+  const [loginData, setLoginData] = useState(()=>{
+    let token =localStorage.getItem("token");
+    return token ?jwtDecode(token):null;
+  })
 
   let saveLoginData=()=>{
     let encodedToken = localStorage.getItem("token");
     let decodedToken = jwtDecode(encodedToken);
     setLoginData(decodedToken)
-    // console.log(loginData );
-    
   }
 
   useEffect(()=>{
-    if(localStorage.getItem("token"))
+    if(localStorage.getItem("token")!==null)
       saveLoginData()
   },[]
 
@@ -48,8 +50,8 @@ function App() {
     element:<AuthLayout/>,
     errorElement:<NotFound/>,
     children:[
-      {index:true, element:<Login saveLoginData={saveLoginData}/>},
-      {path:"login", element:<Login saveLoginData={saveLoginData}/>},
+      {index:true, element:<Login saveLoginData= {saveLoginData}/>},
+      {path:"login", element:<Login saveLoginData= {saveLoginData}/>},
       {path:"forget-password", element:<ForgetPass/>},
       {path:"register", element:<Register/>},
       {path:"reset-password", element:<ResetPass/>},
@@ -60,7 +62,7 @@ function App() {
 
   {
     path:"/dashboard",
-    element: <ProtectedRoute> <MasterLayout loginData={loginData}/> </ProtectedRoute>,
+    element: <ProtectedRoute>  <MasterLayout loginData={loginData}/></ProtectedRoute>,
     errorElement:<NotFound/>,
     children:[
       {index:true, element:<Dashboard/>},
@@ -77,7 +79,10 @@ function App() {
 
   return (
     <>
+   
     <RouterProvider router={routes}></RouterProvider>
+    
+
     <ToastContainer
   position="top-right"
   autoClose={3000}

@@ -6,7 +6,15 @@ import 'react-toastify/dist/ReactToastify.css'
 import { publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '../../../Services/Validations/Validations';
 
+
+
+
 export default function Login({saveLoginData}) {
+ 
+
+
+
+ 
 
   let {register, formState:{errors , isSubmitting}, handleSubmit} =useForm({ mode:"onChange"});
   const [passwordEye, setPasswordEye] = useState(false)
@@ -20,15 +28,17 @@ export default function Login({saveLoginData}) {
     try {
     let respons= await  publicAxiosInstance.post(USERS_URLS.Login,data)
     localStorage.setItem("token",respons.data.token)
-    // console.log(respons);
+    console.log(respons.data.token);
+    console.log(data);
     saveLoginData()
     toast.success( respons.data.message||"Logged in Successfuly ");
-
     navigate("/dashboard")
+   
+    setToken(respons?.data?.token)
     
     } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error.response.data.message);
+      toast.error(error.response?.data?.message);
+      console.log(error.response?.data?.message);
       
     }
   }

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../Shared/Header/Header'
-import axios from 'axios'
 import NoData from '../../Shared/Nodata/NoData'
 import { baseURL, Categories_Urls, privateAxiosInstance } from '../../../Services/Urls/Urls'
 import imag from "../../../assets/images/recipes_img (1).png"
@@ -10,8 +9,10 @@ import { ColorRing } from 'react-loader-spinner'
 import CategoryData from '../CategoryData/CategoryData'
 import Pagination from '../../Shared/Pagination/Pagination'
 
+
 export default function CategoriesList() {
 
+ 
   const [categoriesList, setCategoriesList] = useState([])
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [showAddCategory, setShowAddCategory] = useState(false)
@@ -113,7 +114,7 @@ export default function CategoriesList() {
      width="80"
      ariaLabel="color-ring-loading"
      wrapperStyle={{}}
-     wrapperClass="color-ring-wrapper"
+     wrapperClassName="color-ring-wrapper"
      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
      />
      </td>

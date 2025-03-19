@@ -12,7 +12,8 @@ export const USERS_URLS={
     Delete_User :(id)=>`Users/${id}`,
     Forget_Pass :`Users/Reset/Request`,
     Reset_Pass :`Users/Reset`,
-    Change_Pass :`Users/ChangePassword`
+    Change_Pass :`Users/ChangePassword`,
+    VERIFY:`Users/verify`
 }
 export const Categories_Urls={
     Get_Category :`Category`,
