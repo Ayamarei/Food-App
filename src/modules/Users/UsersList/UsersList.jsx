@@ -21,14 +21,15 @@ export default function UsersList() {
      const [countryValue, setCountryValue] = useState("")
      const [phoneValue, setPhoneValue] = useState("")
  
-    let getAllUsers=async(pageSize,pageNumber,userName,country,phoneNumber  )=>{
+    let getAllUsers=async(pageSize,pageNumber,userName,country,phoneNumber)=>{
      try {
        let response =await privateAxiosInstance.get(Users_Urls.Get_Users,{
         params:{pageSize :pageSize,
           pageNumber :pageNumber,
           userName:userName,
           country :country,
-          phoneNumber :phoneNumber   } 
+          phoneNumber:phoneNumber  
+         } 
         
        } )
        console.log(response);

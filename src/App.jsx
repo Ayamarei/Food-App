@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom'
 import AuthLayout from './modules/Shared/AuthLayout/AuthLayout'
 import Login from './modules/Authentication/Login/Login.jsx'
 import ForgetPass from './modules/Authentication/Forget-pass/ForgetPass'
@@ -45,7 +45,7 @@ function App() {
 
   )
 
-  const routes=createBrowserRouter([{
+  const routes=createHashRouter([{
     path:"", 
     element:<AuthLayout/>,
     errorElement:<NotFound/>,
