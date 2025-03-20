@@ -71,7 +71,7 @@ export default function RecipeData() {
          useEffect(()=>{
             getAllCategories()
             getAllTags()
-            if(recipeId!=="new-recipe"){
+            if(recipeId && recipeId !== "new-recipe"){
               const getRecipe=  async ()=>{
                   let response =await privateAxiosInstance.get(`${Recipes_Urls.Get_Recipes}/${recipeId}`);
                   console.log(response);

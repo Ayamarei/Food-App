@@ -125,7 +125,7 @@ export default function RecipesList() {
           <h3>Recipe Table Details</h3>
           <span>You can check all details</span>
         </div>
-        <Link to="/dashboard/recipes/new-recipe" className='btn btn-color text-white mt-3 p-3'>Add New Item</Link>
+        <button onClick={()=>(navigate('/dashboard/recipes/new-recipe'))}  className='btn btn-color text-white mt-3 p-3'>Add New Item</button>
        </div>
         <div className="searchSection container-fluid">
           <div className="row">
