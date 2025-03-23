@@ -7,6 +7,7 @@ import {  publicAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
 import { EMAIL_VALIDATION } from '../../../Services/Validations/Validations';
 
 
+
 export default function ForgetPass() {
 
   let {register, formState:{errors,isSubmitting }, handleSubmit} =useForm({mode:"onChange"});

@@ -5,7 +5,6 @@ import { baseURL, Categories_Urls, privateAxiosInstance } from '../../../Service
 import imag from "../../../assets/images/recipes_img (1).png"
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
-import { ColorRing } from 'react-loader-spinner'
 import CategoryData from '../CategoryData/CategoryData'
 import Pagination from '../../Shared/Pagination/Pagination'
 import { useNavigate, useOutletContext } from 'react-router-dom'
@@ -113,8 +112,10 @@ export default function CategoriesList() {
   </thead>
   <tbody>
   {isLoading?(( <tr  className=" d-flex  align-items-center justify-content-center text-center ">
-     <td>
-     <ColorRing
+    <td className='fs-1'>
+      Loading....
+     </td>
+     {/* <ColorRing
      visible={true}
      height="80"
      width="80"
@@ -122,8 +123,8 @@ export default function CategoriesList() {
      wrapperStyle={{}}
      wrapperClassName="color-ring-wrapper"
      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-     />
-     </td>
+     /> */}
+     
      </tr>)):categoriesList&&categoriesList.length >0 ? categoriesList.map((category,idx)=>
      <tr key={idx}>
      <th scope="row">{category.id}</th>

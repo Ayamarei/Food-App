@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import NoData from '../../Shared/Nodata/NoData'
 import Header from '../../Shared/Header/Header'
-import axios from 'axios'
 import {  baseURL, Categories_Urls, img_URL, privateAxiosInstance, Recipes_Urls, Tags_Urls } from '../../../Services/Urls/Urls'
 import imag from "../../../assets/images/recipes_img (1).png"
 import recipeImag from "../../../assets/images/no-data.png"
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
-import { ColorRing } from 'react-loader-spinner'
 import Pagination from '../../Shared/Pagination/Pagination'
 import {  useNavigate, useOutletContext } from 'react-router-dom'
 import FavoritesData from '../../Favorites/FavoritesData/FavoritesData'
+// import { ClipLoader } from 'react-spinners'
 
 export default function RecipesList() {
   const [recipesList, setRecipesList] = useState([])
@@ -30,6 +29,7 @@ export default function RecipesList() {
 
    let getAllRecipes=async(pageSize ,pageNumber ,name,tag ,cat)=>{
     try {
+      
       let response =await privateAxiosInstance.get(Recipes_Urls.Get_Recipes,{
         params:{pageSize :pageSize,
           pageNumber :pageNumber,
@@ -108,7 +108,6 @@ export default function RecipesList() {
        }
       
       }
-   
 
    useEffect(()=>{
     getAllRecipes(4,1)
@@ -183,8 +182,14 @@ export default function RecipesList() {
       <tbody>
       {isLoading?((
         <tr  className=" d-flex  align-items-center justify-content-center text-center ">
-     <td>
-     { <ColorRing
+     <td className='fs-1'>
+      Loading....
+     </td>
+     {/* <ClipLoader
+  color="#4AA35A"
+  size={40}
+/> */}
+     {/* { <ColorRing
      visible={true}
      height="80"
      width="80"
@@ -192,8 +197,8 @@ export default function RecipesList() {
      wrapperStyle={{}}
      wrapperClass="color-ring-wrapper"
      colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-     /> }
-     </td>
+     /> } */}
+    
      </tr>)):recipesList&&recipesList.length >0 ? recipesList.map((recipe,idx)=>
          <tr key={idx}>
          {/* <th scope="row">{recipe.id}</th> */}
@@ -231,5 +236,4 @@ export default function RecipesList() {
     </>
   )
 }
-
 

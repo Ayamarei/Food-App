@@ -4,7 +4,6 @@ import imag from "../../../assets/images/recipes_img (1).png"
 import recipeImag from "../../../assets/images/smile.jpeg"
 import Header from '../../Shared/Header/Header'
 import NoData from '../../Shared/Nodata/NoData'
-import { ColorRing } from 'react-loader-spinner'
 import { useNavigate, useOutletContext } from 'react-router-dom'
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
@@ -59,15 +58,9 @@ export default function FavoritesList() {
       
            <div  className=" d-flex  align-items-center justify-content-center text-center ">
        
-        { <ColorRing
-        visible={true}
-        height="80"
-        width="80"
-        ariaLabel="color-ring-loading"
-        wrapperStyle={{}}
-        wrapperClass="color-ring-wrapper"
-        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        /> }
+       <p className='fs-1'>
+      Loading....
+     </p>
        
         </div>)):favsList&&favsList.length >0 ? favsList.map((favRecipe,idx)=>
            <div key={idx} className="col-md-4">
