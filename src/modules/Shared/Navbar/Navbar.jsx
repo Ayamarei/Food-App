@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ChangePass from '../../Authentication/Change-pass/ChangePass';
 import { useNavigate } from 'react-router-dom';
 import imag from "../../../assets/images/Ellipse 234.png"
+import { privateAxiosInstance, USERS_URLS } from '../../../Services/Urls/Urls';
 
-export default function Navbar({loginData}) {
+
+export default function Navbar({saveLoginData}) {
+  const loginData =saveLoginData()
+  
   const [showChangePassword, setShowChangePassword] = useState(false)
+  
   const navigate =useNavigate()
+ 
 
-
-console.log(loginData);
 
   return (
     <>

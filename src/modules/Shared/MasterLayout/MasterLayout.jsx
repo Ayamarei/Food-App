@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 import SideBar from '../SideBar/SideBar'
 
 
-export default function MasterLayout({loginData}) {
+export default function MasterLayout({saveLoginData}) {
 
   
   return (
@@ -13,14 +13,14 @@ export default function MasterLayout({loginData}) {
 
    <div className="d-flex vh-100">
     <div >
-    <SideBar/>
+    <SideBar saveLoginData={saveLoginData}/>
     </div>
      
     <div className="w-100 d-flex flex-column">
-    <Navbar loginData={loginData}/>
+    <Navbar saveLoginData={saveLoginData}/>
     {/* <Header/> */}
     <div className='overflow-y-auto'> 
-      <Outlet context={{ loginData }}/>
+      <Outlet context={{ saveLoginData }}/>
     </div>
     </div>
    </div>

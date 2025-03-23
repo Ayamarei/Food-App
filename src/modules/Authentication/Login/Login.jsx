@@ -10,12 +10,7 @@ import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '../../../Services/Validat
 
 
 export default function Login({saveLoginData}) {
- 
-
-
-
- 
-
+   
   let {register, formState:{errors , isSubmitting}, handleSubmit} =useForm({ mode:"onChange"});
   const [passwordEye, setPasswordEye] = useState(false)
 
@@ -53,9 +48,9 @@ export default function Login({saveLoginData}) {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-envelope' aria-hidden="true"></i>
                    </span>
-                   <input {...register("email",EMAIL_VALIDATION
-
-                 )} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+                   <input {...register("email",EMAIL_VALIDATION )} 
+                   type="text" className="form-control input-group-text" 
+                   placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
 
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
@@ -65,11 +60,13 @@ export default function Login({saveLoginData}) {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-key' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,PASSWORD_VALIDATION)} type={(passwordEye===false)?"password":"text"} class="form-control input-group-text" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <input {...register("password" ,PASSWORD_VALIDATION)}
+                    type={(passwordEye===false)?"password":"text"} 
+                   className="form-control input-group-text"
+                    placeholder="Password" aria-label="Username" aria-describedby="basic-addon1"/>
                    <span className="input-group-text" id="basic-addon1">
-                   {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
+                   {(passwordEye===false)?<i className="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
                    </span>
-                    
                   </div>
                  
                  {errors.password&&<span className='text-danger'>{errors.password.message}</span>}

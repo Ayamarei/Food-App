@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { ColorRing } from 'react-loader-spinner'
 import CategoryData from '../CategoryData/CategoryData'
 import Pagination from '../../Shared/Pagination/Pagination'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 
 
 export default function CategoriesList() {
@@ -20,7 +21,11 @@ export default function CategoriesList() {
   const [categoryId, setCategoryId] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [arrayOfPages, setArrayOfPages] = useState([])
-    const [nameValue, setNameValue] = useState("")
+  const [nameValue, setNameValue] = useState("")
+  const { saveLoginData } = useOutletContext();
+  const loginData =saveLoginData()
+  const navigate =useNavigate()
+    
   
 
    let getAllCategories=async(pageSize,pageNumber,name)=>{
@@ -62,7 +67,8 @@ export default function CategoriesList() {
     }
 
    useEffect(()=>{
-    getAllCategories(4,1)}
+    {loginData.userGroup=="SystemUser"?navigate("/login"): getAllCategories(4,1)}
+   }
     ,[]
    )
 
@@ -127,7 +133,6 @@ export default function CategoriesList() {
      <td className="dropdown">
      <i className="fa-solid fa-ellipsis" data-bs-toggle="dropdown"></i>
      <ul className="dropdown-menu">
-     <li> <i className="fa-solid fa-hurricane  m-3 icon-color"></i>View</li>
      <li onClick={()=>{setEditCategory(category.name);setShowAddCategory(true); setCategoryId(category.id)}}><i className="fa fa-edit m-3 icon-color"></i>Edit</li>
      <li onClick={()=> {setShowDeleteConfirm(true);setCategoryId(category.id)}}> <i className="fa fa-trash m-3 icon-color " ></i> Delete</li>
     </ul>

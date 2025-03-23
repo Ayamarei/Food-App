@@ -5,7 +5,9 @@ import { Categories_Urls, privateAxiosInstance, Recipes_Urls, Tags_Urls } from '
 import { toast } from 'react-toastify'
 
 
+
 export default function RecipeData() {
+ 
     let{register,formState:{errors ,isSubmitting},handleSubmit,setValue}=useForm()
     const [categories, setCategories] = useState([])
       const [tags, setTags] = useState([])
@@ -99,17 +101,19 @@ export default function RecipeData() {
         <p>you can now fill the meals easily using the table and form , click here and sill it with the table !</p>
         </div>
         <div className='col-md-2'>
-        <Link to="/dashboard/recipes" className='btn btn-color text-white mt-3 p-3'>All Recipes <i class="fa-solid fa-arrow-right"></i></Link>
+        <Link to="/dashboard/recipes" className='btn btn-color text-white mt-3 p-3'>All Recipes <i className="fa-solid fa-arrow-right"></i></Link>
         </div>
          </div>
     </div>
     <div className="form mx-5">
     <form onSubmit={handleSubmit(onSubmit)} >
+    <div className="d-flex flex-column col-10 mx-auto align-items-center justify-content-center">
+       
               <input {...register("name" , { required: "The name field is required."}) }  type='text' className="form-control input-group-text mt-5 mb-3 " placeholder=" Recipe Name" aria-label="Username" aria-describedby="basic-addon1"/>
                  {errors.name && <span className="text-danger">{errors.name.message}</span>}
-                 <div>
-            <select class="form-select input-group-text" aria-label="Default select example"  {...register("tagId" , { required: "The Tag  field is required."}) } >
-             <option selected>Tags</option>
+                 <div className="form-control  border-0 mb-0 px-2 py-2">
+            <select className="form-select input-group-text" aria-label="Default select example"  {...register("tagId" , { required: "The Tag  field is required."}) } >
+             <option defaultValue>Tags</option>
              {tags?.map(({id,name})=>(
               <option key={id} value={id} >{name}</option>
              ))}
@@ -118,8 +122,8 @@ export default function RecipeData() {
                   <input {...register("price" , { required: "The price  field is required."}) }
                     type='number' className="form-control input-group-text mt-5 mb-3 " placeholder=" Recipe price "  aria-describedby="basic-addon1"/>
                 {errors.price  && <span className="text-danger">{errors.price .message}</span>}
-              <div>
-             <select class="form-select input-group-text"  aria-label="Default select example"  {...register("categoriesIds" , { required: "The Categories  field is required."}) } >
+                <div className="form-control  border-0 mb-3 px-2 py-2">
+             <select className="form-select input-group-text "  aria-label="Default select example"  {...register("categoriesIds" , { required: "The Categories  field is required."}) } >
               <option selected>Category</option>
                {categories?.map(({id,name})=>(
               <option key={id} value={id}>{name}</option>
@@ -128,14 +132,18 @@ export default function RecipeData() {
             </div>
              <textarea {...register("description" , { required: "The description  field is required."}) }  type='text' className="form-control input-group-text mt-5 mb-3 " placeholder="  description " aria-label="Username" aria-describedby="basic-addon1"/>
                {errors.description  && <span className="text-danger">{errors.description.message}</span>}
+
+               
              <input {...register("recipeImage" ) } 
               type='file' className="form-control input-group-text mt-5 mb-3 "
                placeholder="  description " aria-label="Username"
               aria-describedby="basic-addon1"/>
 
                {errors.recipeImage  && <span className="text-danger">{errors.recipeImage.message}</span>}
-              <div className="btn_groub position-absolute end-0">
-              <Link to="/dashboard/recipes" className=' p-5 cancel rounded-2 py-2 my-2 '> Cancel  </Link>
+              </div>
+
+              <div className="d-flex justify-content-end  btn_groub ">
+              <Link to="/dashboard/recipes" className=' p-5 cancel rounded-2 py-2 my-2 '> Cancel </Link>
                <button  disabled={isSubmitting}  className=' p-5  mx-5  btnn rounded-2 py-2 my-2 '> {isSubmitting?"Saving...":"Save "} </button>
                
               </div>

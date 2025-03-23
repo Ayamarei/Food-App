@@ -7,6 +7,8 @@ import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmati
 import { toast } from 'react-toastify'
 import {  ColorRing } from 'react-loader-spinner'
 import Pagination from '../../Shared/Pagination/Pagination'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import FavoritesData from '../../Favorites/FavoritesData/FavoritesData'
 
 
 
@@ -20,6 +22,10 @@ export default function UsersList() {
      const [nameValue, setNameValue] = useState("")
      const [countryValue, setCountryValue] = useState("")
      const [phoneValue, setPhoneValue] = useState("")
+     const { saveLoginData } = useOutletContext();
+  const loginData =saveLoginData()
+  const navigate =useNavigate()
+   const [selectedUser, setSelectedUser] = useState(null)
  
     let getAllUsers=async(pageSize,pageNumber,userName,country,phoneNumber)=>{
      try {
@@ -75,8 +81,14 @@ export default function UsersList() {
       getAllUsers(3,1,nameValue,countryValue,e.target.value)
       }
  
+      const handleView = (user) => {
+        setSelectedUser(user);  
+      }
+
     useEffect(()=>{
-      getAllUsers(4,1)}
+      {loginData.userGroup=="SystemUser"?navigate("/login"):getAllUsers(4,1)}}
+
+      
      ,[]
     )
  
@@ -172,7 +184,7 @@ export default function UsersList() {
       <td className="dropdown">
       <i className="fa-solid fa-ellipsis" data-bs-toggle="dropdown"></i>
       <ul className="dropdown-menu">
-      <li> <i className="fa-solid fa-hurricane  m-3 icon-color"></i>View</li>
+      <li onClick={() => handleView(user)}> <i  className="fa-solid fa-hurricane  m-3 icon-color"></i>View</li>
       <li onClick={()=> {setShowDeleteConfirm(true);setDeleteById(user.id)}}> <i className="fa fa-trash m-3 icon-color " ></i> Delete</li>
      
      </ul>
@@ -190,6 +202,7 @@ export default function UsersList() {
         
         </div>
         <Pagination arrayOfPages={arrayOfPages} PaginationFun ={getAllUsers}/>
+        {selectedUser&&(<FavoritesData selectedUser={selectedUser} closeModal={()=>setSelectedUser(null)}/>)}
      </>
    )
 }

@@ -21,29 +21,21 @@ import { Bounce, ToastContainer } from 'react-toastify'
 import { jwtDecode } from 'jwt-decode'
 import ProtectedRoute from './modules/Shared/ProtectedRoute/ProtectedRoute.jsx'
 import RecipeData from './modules/Recipes/RecipeData/RecipeData.jsx'
+import FavoritesList from './modules/Favorites/FavoritesList/FavoritesList.jsx'
 
 
 
 
 function App() {
  
-  const [loginData, setLoginData] = useState(()=>{
-    let token =localStorage.getItem("token");
-    return token ?jwtDecode(token):null;
-  })
 
   let saveLoginData=()=>{
-    let encodedToken = localStorage.getItem("token");
-    let decodedToken = jwtDecode(encodedToken);
-    setLoginData(decodedToken)
+    let token =localStorage.getItem("token");
+    return token ?jwtDecode(token):null;
   }
 
-  useEffect(()=>{
-    if(localStorage.getItem("token")!==null)
-      saveLoginData()
-  },[]
-
-  )
+  
+  
 
   const routes=createHashRouter([{
     path:"", 
@@ -62,13 +54,14 @@ function App() {
 
   {
     path:"/dashboard",
-    element: <ProtectedRoute>  <MasterLayout loginData={loginData}/></ProtectedRoute>,
+    element: <ProtectedRoute>  <MasterLayout saveLoginData={saveLoginData}/></ProtectedRoute>,
     errorElement:<NotFound/>,
     children:[
       {index:true, element:<Dashboard/>},
       {path:"recipes", element:<RecipesList/>},
       {path:"recipes/new-recipe", element:<RecipeData/>},
       {path:"recipes/:recipeId", element:<RecipeData/>},
+      {path:"favorites", element:<FavoritesList/>},
       {path:"categories", element:<CategoriesList/>},
       {path:"category-data", element:<CategoryData/>},
       {path:"users", element:<UsersList/>},

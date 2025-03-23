@@ -178,3 +178,32 @@ text-decoration: none !important;
     border-radius: 50%;
     
 }
+
+/* .favImg:hover{
+    transform: scale(1.2);
+ }
+ .favImg img{
+    transition: all 3ms;
+    -webkit-transition: all 3ms;
+    -moz-transition: all 3ms;
+    -ms-transition: all 3ms;
+    -o-transition: all 3ms;
+} */
+ .card{
+    box-shadow: 4px 4px 4px #00000040;
+ }
+
+ .card .heart {
+    border-radius: 8px;
+    cursor: pointer;
+    top: 20px;
+    right: 20px;
+    border: 2px solid rgba(31, 38, 62, 1);
+    color: #4AA35A;
+}
+.user-image {
+    width: 200px;
+    height: 200px; 
+    object-fit: cover;
+    border-radius: 50%; 
+}

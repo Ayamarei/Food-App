@@ -13,8 +13,11 @@ export const USERS_URLS={
     Forget_Pass :`Users/Reset/Request`,
     Reset_Pass :`Users/Reset`,
     Change_Pass :`Users/ChangePassword`,
-    VERIFY:`Users/verify`
+    VERIFY:`Users/verify`,
+    CURRENTUSER:`Users/currentUser`,
 }
+
+
 export const Categories_Urls={
     Get_Category :`Category`,
     Add_Category :`Category/`,
@@ -30,7 +33,10 @@ export const Recipes_Urls={
 export const Users_Urls={
     Get_Users :`Users`,
     Delete_Users :`Users`,
-  
+}
+export const FAVS_URLS={
+    Get_Favs :`userRecipe`,
+    ADD_Favs :`userRecipe`,
 }
 export const Tags_Urls={
     Get_Tags :`tag/`

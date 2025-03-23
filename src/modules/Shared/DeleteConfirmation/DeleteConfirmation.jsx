@@ -1,6 +1,6 @@
 import React from 'react'
 import confirmImag from "../../../assets/images/no-data.png"
-import { useForm } from 'react-hook-form'
+
 
 export default function DeleteConfirmation({close,confirmDelete}) {
  
@@ -19,26 +19,7 @@ export default function DeleteConfirmation({close,confirmDelete}) {
 
     </div>
 
-   {/* <div>
-   <div className="modal d-block " tabindex="-1">
-  <div className="modal-dialog">
-    <div className="modal-content p-3">
-     
-      <div className="modal-header">
-        <button type="button" className="btn-close text-danger" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <img src={confirmImag} className='w-25' alt="confirm Imag" />
-      <div className="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-   </div> */}
+   
     </>
   )
 }

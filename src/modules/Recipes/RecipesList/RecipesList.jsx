@@ -4,14 +4,15 @@ import Header from '../../Shared/Header/Header'
 import axios from 'axios'
 import {  baseURL, Categories_Urls, img_URL, privateAxiosInstance, Recipes_Urls, Tags_Urls } from '../../../Services/Urls/Urls'
 import imag from "../../../assets/images/recipes_img (1).png"
+import recipeImag from "../../../assets/images/no-data.png"
 import DeleteConfirmation from '../../Shared/DeleteConfirmation/DeleteConfirmation'
 import { toast } from 'react-toastify'
 import { ColorRing } from 'react-loader-spinner'
 import Pagination from '../../Shared/Pagination/Pagination'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate, useOutletContext } from 'react-router-dom'
+import FavoritesData from '../../Favorites/FavoritesData/FavoritesData'
 
 export default function RecipesList() {
-
   const [recipesList, setRecipesList] = useState([])
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [deleteById, setDeleteById] = useState(null)
@@ -23,7 +24,9 @@ export default function RecipesList() {
   const [tagValue, setTagValue] = useState("")
   const [categoryValue, setCategoryValue] = useState("")
   const navigate=useNavigate()
-
+  const { saveLoginData } = useOutletContext();
+  const loginData =saveLoginData()
+  const [selectedRecipe, setSelectedRecipe] = useState(null)
 
    let getAllRecipes=async(pageSize ,pageNumber ,name,tag ,cat)=>{
     try {
@@ -36,7 +39,7 @@ export default function RecipesList() {
       } 
         
       } )
-      setRecipesList(response?.data.data);
+      setRecipesList(response?.data?.data);
       console.log(response);
       
        setArrayOfPages(Array(response?.data?.totalNumberOfPages).fill().map((_,index)=>index+1));
@@ -52,10 +55,7 @@ export default function RecipesList() {
 
    let deleterecipe=async()=>{
     try {
-      let response =await axios.delete(`${baseURL}Recipe/${deleteById}`,{
-        headers:{Authorization:localStorage.getItem("token")}  
-      }
-      )
+      let response =await privateAxiosInstance.delete(`${baseURL}Recipe/${deleteById}`)
       toast.success(response?.data.message||"Deleted Successfully")
       getAllRecipes(3,1)
       setShowDeleteConfirm(false)
@@ -69,18 +69,21 @@ export default function RecipesList() {
 
    let getNameValue=(e)=>{
    setNameValue(e.target.value)
-   getAllRecipes(3,1,e.target.value,tagValue,categoryValue)
+   getAllRecipes(4,1,e.target.value,tagValue,categoryValue)
  
    }
 
    let getTagValue=(e)=>{
     setTagValue(e.target.value)
-   getAllRecipes(3,1,nameValue,e.target.value,categoryValue)
+    console.log(e.target.value);
+    
+   getAllRecipes(4,1,nameValue,e.target.value,categoryValue)
    }
 
    let getCategoryValue=(e)=>{
     setCategoryValue(e.target.value)
-   getAllRecipes(3,1,nameValue ,tagValue,e.target.value)
+    
+   getAllRecipes(4,1,nameValue ,tagValue,e.target.value)
    }
 
     let getAllCategories=async()=>{
@@ -96,7 +99,7 @@ export default function RecipesList() {
     let getAllTags=async()=>{
        try {
          let response =await privateAxiosInstance.get(Tags_Urls.Get_Tags)
-         setTags(response?.data)
+         setTags(response.data)
         //  console.log(response);
          
          
@@ -115,6 +118,9 @@ export default function RecipesList() {
        ,[]
       )
    
+      const handleView = (recipe) => {
+        setSelectedRecipe(recipe);  
+      }
 
   return (
     <>
@@ -125,7 +131,8 @@ export default function RecipesList() {
           <h3>Recipe Table Details</h3>
           <span>You can check all details</span>
         </div>
-        <button onClick={()=>(navigate('/dashboard/recipes/new-recipe'))}  className='btn btn-color text-white mt-3 p-3'>Add New Item</button>
+        {loginData.userGroup!="SystemUser"?<button onClick={()=>(navigate('/dashboard/recipes/new-recipe'))}  className='btn btn-color text-white mt-3 p-3'>Add New Item</button>:""}
+        
        </div>
         <div className="searchSection container-fluid">
           <div className="row">
@@ -141,7 +148,7 @@ export default function RecipesList() {
             {/* SELECT TAGS */}
             <div className="col-md-3">
             <select className="form-select" aria-label="Default select example" onChange={getTagValue}>
-             <option selected>Tags</option>
+             <option value>Tags</option>
              {tags?.map(({id,name})=>(
               <option key={id} defaultValue={id} >{name}</option>
              ))}
@@ -150,7 +157,7 @@ export default function RecipesList() {
             {/* SELECT CATEGORY */}
             <div className="col-md-3">
             <select className="form-select" onChange={getCategoryValue} aria-label="Default select example">
-              <option selected>Category</option>
+              <option value>Category</option>
                {categories?.map(({id,name})=>(
               <option key={id} defaultValue={id}>{name}</option>
              ))}
@@ -191,22 +198,27 @@ export default function RecipesList() {
          <tr key={idx}>
          {/* <th scope="row">{recipe.id}</th> */}
          <td>{recipe.name}</td>
-         <td><img width={"50"} src={recipe.imagePath?`${img_URL}${recipe.imagePath}`:imag}alt="ٌ Recipe image" /></td>
+         <td><img width={"50"} src={recipe.imagePath?`${img_URL}${recipe.imagePath}`:recipeImag}alt="ٌ Recipe image" /></td>
          <td>{recipe.price}EG</td>
          <td>{recipe.description }</td>
          <td> {recipe.tag.name}</td>
-         <td>{recipe.category[0].name}</td>
+         <td>{recipe.category.map((cat)=>`${cat.name}`)}</td>
          
          <td className="dropdown">
        <i className="fa-solid fa-ellipsis " data-bs-toggle="dropdown"></i>
        <ul className="dropdown-menu">
-        <li > <i className="fa-solid fa-hurricane  m-3 icon-color"></i>View</li>
-        <li  onClick={()=>(navigate(`/dashboard/recipes/${recipe.id}`))} > <i className="fa fa-edit m-3 icon-color"></i>Edit</li> 
-        <li onClick={()=>{setShowDeleteConfirm(true);setDeleteById(recipe.id)}}> <i className="fa fa-trash m-3 icon-color " ></i> Delete</li>
+       
+      {loginData.userGroup!="SystemUser"?
+      <td>
+      <li  onClick={()=>(navigate(`/dashboard/recipes/${recipe.id}`))} > <i className="fa fa-edit m-3 icon-color"></i>Edit</li> 
+       <li onClick={()=>{setShowDeleteConfirm(true);setDeleteById(recipe.id)}}> <i className="fa fa-trash m-3 icon-color " ></i> Delete</li>
+       </td>:""
+       }
+          <li onClick={() => handleView(recipe)} > <i className="fa-solid fa-hurricane  m-3 icon-color"></i>View</li>
        </ul>
          </td>
        </tr> 
-      ):<NoData/> }
+      ):<div className='d-flex align-items-center justify-content-center'> <NoData/></div>  }
        
       </tbody>
            </table>
@@ -215,6 +227,7 @@ export default function RecipesList() {
           
            </div> 
            <Pagination arrayOfPages={arrayOfPages} PaginationFun={getAllRecipes}/>
+           {selectedRecipe&&(<FavoritesData selected={selectedRecipe} closeModal={()=>setSelectedRecipe(null)}/>)}
     </>
   )
 }
