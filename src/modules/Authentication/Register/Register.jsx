@@ -41,7 +41,7 @@ export default function Register() {
     
     } catch (error) {
        toast.error(error.response.data.message);
-      // console.log(error.response.data.message);
+    
     }
     
   }
@@ -60,7 +60,8 @@ export default function Register() {
                    <span className="input-group-text" id="basic-addon1">
                    <i class="fa-solid fa-user"></i>
                    </span>
-                   <input {...register("userName",Name_VALIDATION)} type="text" class="form-control input-group-text" placeholder="User Name"  aria-describedby="basic-addon1"/>
+                   <input {...register("userName",Name_VALIDATION)} type="text"
+                    class="form-control input-group-text p-3" placeholder="User Name"  aria-describedby="basic-addon1"/>
                  </div>
                  {errors.userName&&<span className='text-danger'>{errors.userName.message}</span>}
                     </div>
@@ -69,7 +70,8 @@ export default function Register() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-envelope' aria-hidden="true"></i>
                    </span>
-                   <input {...register("email",EMAIL_VALIDATION)} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+                   <input {...register("email",EMAIL_VALIDATION)} type="text" 
+                   class="form-control input-group-text p-3" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
                     </div>
@@ -78,7 +80,7 @@ export default function Register() {
                     <div className="col-md-6">
                     <div className="input-group mb-2">
                    <span className="input-group-text" id="basic-addon1">
-                   <i class="fa-solid fa-earth-americas"></i>
+                   <i class="fa-solid fa-earth-americas p-3"></i>
                    </span>
                    <input {...register("country" ,{required:"Country is require"})}  type="text" class="form-control input-group-text" placeholder="Country "  aria-describedby="basic-addon1"/>
                  </div>
@@ -89,7 +91,8 @@ export default function Register() {
                    <span className="input-group-text" id="basic-addon1">
                    <i class="fa-solid fa-phone"></i>
                    </span>
-                   <input {...register("phoneNumber",PHON_VALIDATION)} type="text" class="form-control input-group-text" placeholder="Enter your Phone Number "  aria-describedby="basic-addon1"/>
+                   <input {...register("phoneNumber",PHON_VALIDATION)} type="text" 
+                   class="form-control input-group-text p-3" placeholder="Enter your Phone Number "  aria-describedby="basic-addon1"/>
                  </div>
                  {errors.phoneNumber&&<span className='text-danger'>{errors.phoneNumber.message}</span>}
                     </div>
@@ -101,7 +104,8 @@ export default function Register() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,PASSWORD_VALIDATION)} type={(passwordEye===false)?"password":'text'} class="form-control input-group-text" placeholder=" Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <input {...register("password" ,PASSWORD_VALIDATION)}
+                    type={(passwordEye===false)?"password":'text'} class="form-control input-group-text p-3" placeholder=" Password" aria-label="Username" aria-describedby="basic-addon1"/>
                    <span className="input-group-text" id="basic-addon1">
                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
                    </span>
@@ -116,7 +120,8 @@ export default function Register() {
                    </span>
                    <input {...register("confirmPassword" ,{required:"Confirm Password is required",
                    validate:(confirmPassword)=>
-                    confirmPassword===watch("password")||"Password do not match"})} type={(passwordConfirmEye===false)?"password":'text'} class="form-control input-group-text" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                    confirmPassword===watch("password")||"Password do not match"})} 
+                    type={(passwordConfirmEye===false)?"password":'text'} class="form-control input-group-text p-3" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1"/>
                    <span className="input-group-text" id="basic-addon1">
                    {(passwordConfirmEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordConfirm}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordConfirm}></i>}
                    </span>
@@ -129,7 +134,7 @@ export default function Register() {
                 
                 
                  <Link to="/login"  className='position-absolute end-0  text-decoration-none forget-pass'>Login Now ?</Link>
-                 <button disabled={isSubmitting}  className='w-100 btnn rounded-2 py-2 my-5'> {isSubmitting?"Loading...":"Register"}</button>
+                 <button disabled={isSubmitting}  className='w-100 btnn rounded-2 py-3 my-5'> {isSubmitting?"Loading...":"Register"}</button>
                  </form>
        </div>
          

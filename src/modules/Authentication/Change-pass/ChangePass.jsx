@@ -38,7 +38,7 @@ export default function ChangePass({closeModal}) {
    const onSubmit= async(data)=>{
       try {
       let respons= await  privateAxiosInstance.put(USERS_URLS.Change_Pass,data)
-      console.log(respons);
+  
       
        toast.success(respons.data.message);
        closeModal()

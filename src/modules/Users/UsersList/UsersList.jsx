@@ -111,9 +111,9 @@ export default function UsersList() {
                   <i className='fas fa-user'></i>
                 </span>
                 <input type="text" 
-                className='form-control border-0 rounded' 
+                className='form-control border-0 rounded p-2' 
                 onChange={getNameValue} placeholder='Name'
-                 aria-label='Search' aria-describedby='search-addon'/>
+                 aria-label='Search By Name' aria-describedby='search-addon'/>
               </div>
             </div>
             
@@ -123,7 +123,7 @@ export default function UsersList() {
                   <i className='fas fa-earth-americas'></i>
                 </span>
                 <input type="text" 
-                className='form-control border-0 rounded' 
+                className='form-control border-0 rounded p-2' 
                 onChange={getCountryValue} placeholder='Country'
                  aria-label='Search' aria-describedby='search-addon'/>
               </div>
@@ -135,8 +135,8 @@ export default function UsersList() {
                 <span className='input-group-text border-0 bg-transparent ' id='search-addon'>
                   <i className='fas fa-phone'></i>
                 </span>
-                <input type="number" 
-                className='form-control border-0 rounded' 
+                <input type="text" 
+                className='form-control border-0 rounded p-2' 
                  onChange={getPhoneValue} placeholder='Phone Number'
                  aria-label='Search' aria-describedby='search-addon'/>
               </div>
@@ -200,9 +200,10 @@ export default function UsersList() {
         {showDeleteConfirm&&
         <DeleteConfirmation close={()=>setShowDeleteConfirm(false)} confirmDelete={deleteUser}/>
         }
-        
         </div>
+        <div className="d-flex justify-content-end pe-5">
         <Pagination arrayOfPages={arrayOfPages} PaginationFun ={getAllUsers}/>
+        </div>
         {selectedUser&&(<FavoritesData selectedUser={selectedUser} closeModal={()=>setSelectedUser(null)}/>)}
      </>
    )

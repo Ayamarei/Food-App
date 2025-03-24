@@ -192,6 +192,10 @@ text-decoration: none !important;
  .card{
     box-shadow: 4px 4px 4px #00000040;
  }
+ .card-form{
+    box-shadow: 4px 4px 4px 4px #00000040;
+    background: #fff;
+ }
 
  .card .heart {
     border-radius: 8px;
@@ -207,3 +211,8 @@ text-decoration: none !important;
     object-fit: cover;
     border-radius: 50%; 
 }
+
+.add-img {
+    background-color: rgba(240, 255, 239, 1) !important;
+    border: #4AA35A dashed 2px;
+  }

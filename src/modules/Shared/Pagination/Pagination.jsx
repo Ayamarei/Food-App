@@ -31,7 +31,7 @@ export default function Pagination({arrayOfPages,PaginationFun}) {
       </Link>
     </li>
     {arrayOfPages?.slice(startPageIndex, endPageIndex).map((page)=>(
-         <li  key={page} onClick={()=>{PaginationFun(5,page)}} className="page-item">
+         <li   key={page} onClick={()=>{PaginationFun(5,page)}} className="page-item">
           <Link className="page-link text-black" >{page}</Link></li>
     ))}
    

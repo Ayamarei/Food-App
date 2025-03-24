@@ -59,7 +59,8 @@ export default function ResetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-envelope' aria-hidden="true"></i>
                    </span>
-                   <input {...register("email",EMAIL_VALIDATION)} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+                   <input {...register("email",EMAIL_VALIDATION)} type="text"
+                    class="form-control input-group-text p-3" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
                 
@@ -67,7 +68,8 @@ export default function ResetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("seed" ,{required:"Otp is required"})} type="text" class="form-control input-group-text" placeholder="OTP" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <input {...register("seed" ,{required:"Otp is required"})} type="text" 
+                   class="form-control input-group-text p-3" placeholder="OTP" aria-label="Username" aria-describedby="basic-addon1"/>
                  </div>
                  {errors.seed&&<span className='text-danger'>{errors.seed.message}</span>}
 
@@ -75,7 +77,9 @@ export default function ResetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-lock' aria-hidden="true"></i>
                    </span>
-                   <input {...register("password" ,PASSWORD_VALIDATION)} type={(passwordEye===false)?"password":'text'} class="form-control input-group-text" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                   <input {...register("password" ,PASSWORD_VALIDATION)}
+                    type={(passwordEye===false)?"password":'text'}
+                     class="form-control input-group-text p-3" placeholder="New Password" aria-label="Username" aria-describedby="basic-addon1"/>
                    <span className="input-group-text" id="basic-addon1">
                    {(passwordEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordClick}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordClick}></i>}
                    </span>
@@ -89,16 +93,18 @@ export default function ResetPass() {
                    </span>
                    <input {...register("confirmPassword" ,{required:"Confirm Password is required",
                    validate:(confirmPassword)=>
-                    confirmPassword===watch("password")||"Password do not match"})} type={(passwordConfirmEye===false)?"password":'text'} class="form-control input-group-text" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1"/>
+                    confirmPassword===watch("password")||"Password do not match"})} 
+                    type={(passwordConfirmEye===false)?"password":'text'} 
+                    className="form-control input-group-text p-3" placeholder="Confirm New Password" aria-label="Username" aria-describedby="basic-addon1"/>
                    <span className="input-group-text" id="basic-addon1">
-                   {(passwordConfirmEye===false)?<i class="fa-solid fa-eye-slash" onClick={handelPasswordConfirm}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordConfirm}></i>}
+                   {(passwordConfirmEye===false)?<i className="fa-solid fa-eye-slash" onClick={handelPasswordConfirm}></i>:<i class="fa-solid fa-eye" onClick={handelPasswordConfirm}></i>}
                    </span>
                     
                   </div>
                    
                  {errors.confirmPassword&&<span className='text-danger'>{errors.confirmPassword.message}</span> }
                 
-                 <button disabled={isSubmitting}  className='w-100 btnn rounded-2 py-2 my-3'> {isSubmitting?"Loading...":"Reset Password"}</button>
+                 <button disabled={isSubmitting}  className='w-100 btnn rounded-2 py-3 my-3'> {isSubmitting?"Loading...":"Reset Password"}</button>
                  </form>
          
     </>

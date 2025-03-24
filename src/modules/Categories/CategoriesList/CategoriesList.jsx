@@ -88,7 +88,7 @@ export default function CategoriesList() {
             {/* search input */}
             <div className="col-md-9">
               <div className="input-group border-1 border rounded ">
-                <span className='input-group-text border-0 bg-transparent  ' id='search-addon'>
+                <span className='input-group-text border-0 bg-transparent p-3 ' id='search-addon'>
                   <i className='fas fa-search'></i>
                 </span>
                 <input type="text" className='form-control border-0 rounded p-2' onChange={getNameValue} placeholder='Search' aria-label='Search' aria-describedby='search-addon'/>
@@ -150,7 +150,9 @@ export default function CategoriesList() {
        {showDeleteConfirm&&
        <DeleteConfirmation close={()=>setShowDeleteConfirm(false)} confirmDelete={deleteCategory}/>
        }
+        <div className="d-flex justify-content-end pe-5">
        <Pagination arrayOfPages={arrayOfPages} PaginationFun ={getAllCategories}/>
+       </div>
        </div>
        
     </>

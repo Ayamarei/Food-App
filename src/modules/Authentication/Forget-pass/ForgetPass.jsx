@@ -15,14 +15,13 @@ export default function ForgetPass() {
   const onSubmit= async(data)=>{
     try {
     let respons= await  publicAxiosInstance.post(USERS_URLS.Forget_Pass,data)
-    console.log(respons);
-    console.log(data);
+   
      toast.success(respons.data.message );
     navigate("/reset-password",{state:data.email})
    
     } catch (error) {
       toast.error(error.response.data.message );
-      console.log(error.response.data.message);
+      
     }
     
   }
@@ -37,10 +36,11 @@ export default function ForgetPass() {
                    <span className="input-group-text" id="basic-addon1">
                    <i className='fa fa-envelope' aria-hidden="true"></i>
                    </span>
-                   <input {...register("email",EMAIL_VALIDATION)} type="text" class="form-control input-group-text" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
+                   <input {...register("email",EMAIL_VALIDATION)} type="text"
+                    class="form-control input-group-text p-3" placeholder="Enter your E-mail"  aria-describedby="basic-addon1"/>
                  </div>
                  {errors.email&&<span className='text-danger'>{errors.email.message}</span>}
-                 <button disabled={isSubmitting} className='w-100 btnn rounded-2 py-2 mb-2'>{isSubmitting?"Loading...":"Submit"}</button>
+                 <button disabled={isSubmitting} className='w-100 btnn rounded-2 py-3 mb-2'>{isSubmitting?"Loading...":"Submit"}</button>
                  </form>
           
     </>

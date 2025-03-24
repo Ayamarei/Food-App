@@ -100,7 +100,9 @@ export default function RecipesList() {
        try {
          let response =await privateAxiosInstance.get(Tags_Urls.Get_Tags)
          setTags(response.data)
-        //  console.log(response);
+         console.log(response);
+         console.log(tags);
+         
          
          
        } catch (error) {
@@ -141,24 +143,25 @@ export default function RecipesList() {
                 <span className='input-group-text border-0 bg-transparent ' id='search-addon'>
                   <i className='fas fa-search'></i>
                 </span>
-                <input type="text" className='form-control border-0 rounded' onChange={getNameValue} placeholder='Search' aria-label='Search' aria-describedby='search-addon'/>
+                <input type="text" className='form-control border-0 rounded p-2' onChange={getNameValue}
+                 placeholder='Search By Name' aria-label='Search' aria-describedby='search-addon'/>
               </div>
             </div>
             {/* SELECT TAGS */}
             <div className="col-md-3">
-            <select className="form-select" aria-label="Default select example" onChange={getTagValue}>
+            <select className="form-select p-2" aria-label="Default select example" onChange={getTagValue}>
              <option value>Tags</option>
              {tags?.map(({id,name})=>(
-              <option key={id} defaultValue={id} >{name}</option>
+              <option key={id} value={id} >{name}</option>
              ))}
             </select>
             </div>
             {/* SELECT CATEGORY */}
             <div className="col-md-3">
-            <select className="form-select" onChange={getCategoryValue} aria-label="Default select example">
+            <select className="form-select p-2" onChange={getCategoryValue} aria-label="Default select example">
               <option value>Category</option>
                {categories?.map(({id,name})=>(
-              <option key={id} defaultValue={id}>{name}</option>
+              <option key={id} value={id}>{name}</option>
              ))}
 </select>
             </div>
@@ -230,8 +233,11 @@ export default function RecipesList() {
            </div>
            {showDeleteConfirm&&( <DeleteConfirmation close={()=>setShowDeleteConfirm(false)} confirmDelete={deleterecipe}/>)}
           
-           </div> 
+           </div>
+           <div className="d-flex justify-content-end pe-5">
            <Pagination arrayOfPages={arrayOfPages} PaginationFun={getAllRecipes}/>
+            </div> 
+           
            {selectedRecipe&&(<FavoritesData selected={selectedRecipe} closeModal={()=>setSelectedRecipe(null)}/>)}
     </>
   )
